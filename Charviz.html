@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>J.A.R.V.I.S - Mi Proyecto IA</title>
+<style>
+body{background:#000;color:#fff;font-family:sans-serif;text-align:center;padding:16px;margin:0}
+.top{color:#888;font-size:11px;letter-spacing:2px}
+.reactor{width:140px;height:140px;border-radius:50%;border:3px solid #FFD60A;margin:18px auto;display:flex;align-items:center;justify-content:center;box-shadow:0 0 50px rgba(255,214,10,.5);font-weight:900;color:#FFD60A;letter-spacing:2px}
+h1{color:#FFD60A;letter-spacing:4px;margin:5px 0;font-size:24px}
+p{color:#888;font-size:13px}
+#resp{background:#111;border:1px solid #222;padding:14px;border-radius:14px;min-height:50px;margin:14px 0;color:#fff;line-height:1.4}
+#resp b{color:#FFD60A}
+input{width:92%;padding:14px;border-radius:100px;border:1px solid #333;background:#111;color:#fff;outline:none}
+input:focus{border-color:#FFD60A}
+button{background:#FFD60A;border:none;padding:12px 18px;border-radius:100px;font-weight:900;margin:5px;cursor:pointer}
+.btns button{background:#111;color:#FFD60A;border:1px solid #333;font-size:12px}
+small{color:#555;font-size:11px}
+</style>
+</head>
+<body>
+<div class="top">STARK INDUSTRIES • EN LÍNEA</div>
+<div class="reactor">JARVIS</div>
+<h1>J.A.R.V.I.S</h1>
+<p>Tu asistente personal dorado con negro</p>
+
+<div id="resp">Hola jefe, soy <b>JARVIS</b>. Pícale a un botón o escríbeme y te respondo hablando.</div>
+
+<div class="btns">
+<button onclick="hablarDe('hola')">👋 Hola</button>
+<button onclick="hablarDe('chiste')">😂 Chiste</button>
+<button onclick="hablarDe('motivame')">🔥 Motívame</button>
+<button onclick="hablarDe('react')">💻 React</button>
+</div>
+
+<input id="t" placeholder="Escribe: Hola, chiste, motívame..." onkeypress="if(event.key==='Enter') enviar()">
+<br>
+<button onclick="enviar()">HABLAR CON JARVIS 🔊</button>
+<br><br>
+<small>Hecho por ti • Mi Proyecto IA • GitHub Pages</small>
+
+<script>
+function decir(texto){
+  document.getElementById('resp').innerHTML = "JARVIS: " + texto;
+  let voz = new SpeechSynthesisUtterance(texto.replace(/<[^>]*>/g,''));
+  voz.lang='es-MX'; voz.rate=0.95; voz.pitch=0.7;
+  speechSynthesis.speak(voz);
+}
+function responder(v){
+  v=v.toLowerCase();
+  if(v.includes('hola')) return "Hola jefe. Qué bueno verlo. ¿Listo para conquistar el mundo como Stark?";
+  if(v.includes('chiste')) return "Por qué Tony Stark no usa Android? Porque él ya tiene su propio Jarvis.";
+  if(v.includes('motiv')) return "Tony hizo su traje en una cueva con chatarra. Usted está haciendo su Jarvis con un celular. Si él pudo, usted puede. No se raje.";
+  if(v.includes('react')) return "React es su traje de Iron Man, jefe. Con React usted hace el Front End de todo. Taxis, Jarvis, lo que sea.";
+  if(v.includes('gracias')) return "Siempre a sus órdenes, jefe.";
+  if(v.includes('quien eres')) return "Soy Jarvis, su asistente personal. Versión dorada y negra, como debe ser.";
+  return "Entendido jefe. Usted dijo: " + v + ". Lo tengo guardado en mi memoria Stark.";
+}
+function hablarDe(t){ decir(responder(t)); }
+function enviar(){
+  let v=document.getElementById('t').value;
+  if(!v) return;
+  decir(responder(v));
+  document.getElementById('t').value='';
+}
+</script>
+</body>
+</html>
