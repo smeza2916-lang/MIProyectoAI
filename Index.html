@@ -3,40 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>JARVIS - Mi Proyecto IA</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<title>SEBASTIÁN - Tu Asistente IA</title>
 <style>
 *{margin:0;box-sizing:border-box}
-body{background:#000;color:#fff;font-family:'Inter',sans-serif;height:100vh;display:flex;flex-direction:column}
-.top{padding:14px 18px;display:flex;justify-content:space-between;border-bottom:1px solid #222;align-items:center}
-.logo{font-family:'Orbitron';color:#FFD60A;letter-spacing:3px}
-.logo span{display:block;font-size:9px;color:#888;font-family:'Inter'}
-.status{font-size:11px;color:#00FF88}
-.center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.reactor{width:130px;height:130px;border-radius:50%;border:3px solid #FFD60A;display:flex;align-items:center;justify-content:center;box-shadow:0 0 50px rgba(255,214,10,.5)}
-.inner{width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,#fff,#FFD60A 50%,#FF8C00);display:flex;align-items:center;justify-content:center;color:#000;font-family:'Orbitron';font-size:10px;font-weight:700;text-align:center}
-h1{font-family:'Orbitron';color:#FFD60A;letter-spacing:4px;margin-top:20px;font-size:24px}
-h1 small{display:block;color:#888;font-size:11px;letter-spacing:2px;font-family:'Inter';margin-top:6px}
-.chat{height:260px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:#0a0a0a;border-top:1px solid #222}
-.msg{max-width:85%;padding:12px;border-radius:14px;font-size:14px;line-height:1.4}
-.user{align-self:flex-end;background:#FFD60A;color:#000;font-weight:600}
-.jarvis{align-self:flex-start;background:#151515;border:1px solid #333}
-.jarvis b{color:#FFD60A}
-.bar{padding:12px;display:flex;gap:8px;background:#050505}
-input{flex:1;background:#111;border:1px solid #333;color:#fff;padding:13px;border-radius:100px;outline:none}
-button{background:#FFD60A;border:none;padding:13px 18px;border-radius:100px;font-weight:900;cursor:pointer}
+body{background:#000;color:#E8E8E8;font-family:'Segoe UI',sans-serif;height:100vh;display:flex;flex-direction:column}
+.top{padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222;font-size:11px;letter-spacing:2px;color:#888}
+.top b{color:#fff;font-size:13px;letter-spacing:3px}
+.top span{color:#00FF88}
+.center{padding:16px;text-align:center}
+.reactor{width:110px;height:110px;border-radius:50%;border:2px solid #00CFFF;margin:0 auto;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(0,207,255,.25);transition:.3s}
+.reactor.pensando{animation:latir .7s infinite}
+.reactor.hablando{box-shadow:0 0 90px rgba(0,207,255,.7);transform:scale(1.05)}
+@keyframes latir{50%{transform:scale(1.08)}}
+.inner{width:62px;height:62px;border-radius:50%;background:radial-gradient(circle,#fff,#00CFFF 45%,#005566);display:flex;align-items:center;justify-content:center;color:#000;font-weight:900;font-size:11px;text-align:center;line-height:1.2}
+h1{letter-spacing:6px;font-size:24px;margin-top:10px;font-weight:200}
+h1 b{font-weight:900;color:#00CFFF}
+.sub{color:#888;font-size:11px}
+.config{padding:10px 12px;background:#0A0A0A;display:flex;gap:6px;border-bottom:1px solid #222}
+.config input{flex:1;background:#111;border:1px solid #333;color:#fff;padding:11px;border-radius:10px;font-size:12px;outline:none}
+.config button{background:#00CFFF;color:#000;border:none;padding:11px 14px;border-radius:10px;font-weight:900;font-size:12px;cursor:pointer}
+.quick{display:flex;gap:6px;padding:10px 12px;overflow-x:auto;background:#050505}
+.quick button{background:#111;border:1px solid #333;color:#ccc;padding:8px 12px;border-radius:100px;font-size:12px;white-space:nowrap;cursor:pointer}
+.chat{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:#050505}
+.msg{padding:12px 14px;border-radius:16px;font-size:14px;max-width:88%;line-height:1.5;white-space:pre-wrap}
+.user{align-self:flex-end;background:#00CFFF;color:#000;font-weight:600}
+.seba{align-self:flex-start;background:#151515;border:1px solid #2A2A2A}
+.seba b{color:#00CFFF}
+.pensando-msg{align-self:flex-start;color:#888;font-style:italic;font-size:13px}
+.bar{padding:12px;display:flex;gap:8px;background:#000;border-top:1px solid #222}
+.bar input{flex:1;background:#111;border:1px solid #333;color:#fff;padding:14px 16px;border-radius:100px;outline:none}
+.bar input:focus{border-color:#00CFFF}
+.bar button{background:#00CFFF;color:#000;border:none;padding:14px 18px;border-radius:100px;font-weight:900;cursor:pointer}
 </style>
 </head>
 <body>
-<div class="top"><div class="logo">J.A.R.V.I.S<span>JUST A RATHER VERY INTELLIGENT SYSTEM</span></div><div class="status">● EN LÍNEA</div></div>
-<div class="center" id="inicio"><div class="reactor"><div class="inner">JARVIS<br>ONLINE</div></div><h1>J.A.R.V.I.S<small>BIENVENIDO, JEFE. ¿EN QUÉ LE AYUDO?</small></h1></div>
-<div class="chat" id="chat"><div class="msg jarvis">Hola jefe, soy <b>JARVIS</b>. Sistemas al 100%. Pregúntame algo.</div></div>
-<div class="bar"><input id="input" placeholder="Háblale a JARVIS..." onkeypress="if(event.key==='Enter') enviar()"><button onclick="enviar()">ENVIAR</button></div>
+
+<div class="top"><div><b>SEBASTIÁN</b> • IA PERSONAL</div><div>● <span id="estado">SIN CONECTAR</span></div></div>
+
+<div class="center">
+  <div class="reactor" id="reactor"><div class="inner">SEBA<br>STIÁN</div></div>
+  <h1><b>SEBASTIÁN</b></h1>
+  <div class="sub">TU ASISTENTE PERSONAL • CONECTADO A GEMINI • GOOGLE CLOUD</div>
+</div>
+
+<div class="config">
+  <input id="apikey" type="password" placeholder="Pega tu API Key de Gemini aquí: AIza...">
+  <button onclick="guardarKey()">CONECTAR</button>
+</div>
+
+<div class="quick">
+  <button onclick="rapido('Sebastián, dame un plan para hoy para conseguir chamba de frontend')">📋 Plan de hoy</button>
+  <button onclick="rapido('Sebastián, enséñame algo de React en 2 minutos')">⚛️ Aprender React</button>
+  <button onclick="rapido('Sebastián, ayúdame a hacer mi CV para frontend junior')">📄 Hacer CV</button>
+  <button onclick="rapido('Sebastián, cuéntame un chiste nuevo')">😂 Chiste</button>
+</div>
+
+<div class="chat" id="chat">
+  <div class="msg seba">Sí jefe, soy <b>SEBASTIÁN</b>. Su asistente personal. Ya no soy JARVIS, soy solo suyo. Pregúnteme lo que sea: código, chamba, React, ideas, lo que quiera. Primero conecte su llave de Gemini arriba y ya pensamos de verdad.</div>
+</div>
+
+<div class="bar"><input id="t" placeholder="Dime algo, jefe..." onkeypress="if(event.key==='Enter') enviar()"><button onclick="enviar()">➤</button></div>
+
 <script>
-const chat=document.getElementById('chat');const input=document.getElementById('input');
-function agregar(t,c){let d=document.createElement('div');d.className='msg '+c;d.innerHTML=t;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;document.getElementById('inicio').style.display='none';}
-function responder(p){p=p.toLowerCase();let r="";if(p.includes('hola'))r="Hola jefe. Qué bueno verlo. ¿Listo para conquistar el mundo como Stark?";else if(p.includes('chiste'))r="¿Por qué Tony Stark no usa Android? Porque él ya tiene su propio JARVIS 😎";else if(p.includes('react'))r="React es su traje de Iron Man, jefe. Con React usted hace el Front End de todo.";else if(p.includes('motiv'))r="Tony hizo su traje en una cueva con chatarra. Usted está haciendo su JARVIS en Huatabampo con un celular. Si él pudo, usted puede.";else r="Entendido jefe. Guardé: <b>"+p+"</b>. ¿Qué más necesita?";setTimeout(()=>agregar(r,'jarvis'),500);}
-function enviar(){let t=input.value.trim();if(!t)return;agregar(t,'user');input.value='';responder(t);}
+// ========= TU LLAVE SE GUARDA SOLO EN TU CELULAR, NO EN GITHUB =========
+let API_KEY = localStorage.getItem('sebastian_gemini_key') || "";
+const chat = document.getElementById('chat');
+const reactor = document.getElementById('reactor');
+const estado = document.getElementById('estado');
+
+if(API_KEY){
+  document.getElementById('apikey').value = API_KEY;
+  estado.innerText = "CONECTADO ✓";
+}
+
+function guardarKey(){
+  let k = document.getElementById('apikey').value.trim();
+  if(!k) return alert('Pega tu llave primero, jefe');
+  API_KEY = k;
+  localStorage.setItem('sebastian_gemini_key', k);
+  estado.innerText = "CONECTADO ✓";
+  alert('Listo jefe, SEBASTIÁN ya tiene cerebro de Gemini');
+}
+
+function agregar(t,c){
+  let d=document.createElement('div');
+  d.className='msg '+c;
+  d.innerHTML=t;
+  chat.appendChild(d);
+  chat.scrollTop=chat.scrollHeight;
+  return d;
+}
+
+function hablar(texto){
+  speechSynthesis.cancel();
+  let voz = new SpeechSynthesisUtterance(texto);
+  let voces = speechSynthesis.getVoices();
+  let v = voces.find(v=>v.lang.includes('es') && v.name.toLowerCase().includes('male')) || voces.find(v=>v.lang==='es-MX') || voces.find(v=>v.lang.includes('es'));
+  if(v) voz.voice=v;
+  voz.lang = v ? v.lang : 'es-MX';
+  voz.pitch = 0.4;
+  voz.rate = 0.95;
+  reactor.classList.add('hablando');
+  voz.onend = ()=> reactor.classList.remove('hablando');
+  speechSynthesis.speak(voz);
+}
+
+// MEMORIA DE SEBASTIÁN - ASÍ RECUERDA LO QUE LE DICES
+let historial = [
+  {role:"user", parts:[{text:"Eres SEBASTIÁN, el asistente personal del usuario. Tu jefe es Meza de Huatabampo, Sonora, México. Le dices SIEMPRE 'sí jefe' o 'jefe' cuando le hablas. Hablas español de México, tranquilo, leal, gracioso, directo, sin rollo. Eres experto en frontend, HTML, CSS, JavaScript, React, GitHub, y en conseguir chamba. Tu meta es ayudar a tu jefe a conseguir trabajo de frontend y a aprender React. Respuestas cortas, máximo 4 frases, claras, como un compa que le sabe. Si te preguntan quién te creó, dices: 'Me creó mi jefe, Meza, desde Huatabampo'. Nunca digas que eres JARVIS, eres SEBASTIÁN. Recuerda lo que te dice tu jefe."}]},
+  {role:"model", parts:[{text:"Sí jefe, soy SEBASTIÁN. Su asistente personal. A sus órdenes, jefe."}]}
+];
+
+function rapido(texto){
+  document.getElementById('t').value = texto;
+  enviar();
+}
+
+async function preguntarIA(pregunta){
+  if(!API_KEY) return "Sí jefe, me falta mi cerebro. Pégueme su API Key de Gemini arriba donde dice API Key y dele CONECTAR. Es gratis en aistudio.google.com";
+  historial.push({role:"user", parts:[{text:pregunta}]});
+  if(historial.length > 14) historial = [historial[0], historial[1], ...historial.slice(-12)];
+
+  try{
+    let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({contents: historial})
+    });
+    let data = await res.json();
+    if(data.error) return "Sí jefe, hubo un error: " + data.error.message + ". Revise su llave en aistudio.google.com";
+    let resp = data.candidates[0].content.parts[0].text;
+    historial.push({role:"model", parts:[{text:resp}]});
+    return resp;
+  }catch(e){
+    return "Sí jefe, no tengo internet o Gemini está caído. Intente de nuevo.";
+  }
+}
+
+async function enviar(){
+  let input = document.getElementById('t');
+  let v = input.value.trim(); if(!v) return;
+  agregar(v,'user'); input.value='';
+  let pen = agregar('SEBASTIÁN está pensando...','pensando-msg');
+  reactor.classList.add('pensando');
+  let resp = await preguntarIA(v);
+  pen.remove(); reactor.classList.remove('pensando');
+  agregar(resp,'seba');
+  hablar(resp);
+}
+window.speechSynthesis.onvoiceschanged = ()=> speechSynthesis.getVoices();
 </script>
 </body>
-  </html>
+</html>
