@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SEBASTIÁN - Tu Asistente IA</title>
+<title>SEBASTIÁN V2 - Tu Asistente</title>
 <style>
 *{margin:0;box-sizing:border-box}
 body{background:#000;color:#E8E8E8;font-family:'Segoe UI',sans-serif;height:100vh;display:flex;flex-direction:column}
@@ -11,9 +11,8 @@ body{background:#000;color:#E8E8E8;font-family:'Segoe UI',sans-serif;height:100v
 .top b{color:#fff;font-size:13px;letter-spacing:3px}
 .top span{color:#00FF88}
 .center{padding:16px;text-align:center}
-.reactor{width:110px;height:110px;border-radius:50%;border:2px solid #00CFFF;margin:0 auto;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(0,207,255,.25);transition:.3s}
+.reactor{width:110px;height:110px;border-radius:50%;border:2px solid #00CFFF;margin:0 auto;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(0,207,255,.25)}
 .reactor.pensando{animation:latir .7s infinite}
-.reactor.hablando{box-shadow:0 0 90px rgba(0,207,255,.7);transform:scale(1.05)}
 @keyframes latir{50%{transform:scale(1.08)}}
 .inner{width:62px;height:62px;border-radius:50%;background:radial-gradient(circle,#fff,#00CFFF 45%,#005566);display:flex;align-items:center;justify-content:center;color:#000;font-weight:900;font-size:11px;text-align:center;line-height:1.2}
 h1{letter-spacing:6px;font-size:24px;margin-top:10px;font-weight:200}
@@ -22,6 +21,7 @@ h1 b{font-weight:900;color:#00CFFF}
 .config{padding:10px 12px;background:#0A0A0A;display:flex;gap:6px;border-bottom:1px solid #222}
 .config input{flex:1;background:#111;border:1px solid #333;color:#fff;padding:11px;border-radius:10px;font-size:12px;outline:none}
 .config button{background:#00CFFF;color:#000;border:none;padding:11px 14px;border-radius:10px;font-weight:900;font-size:12px;cursor:pointer}
+.debug{padding:8px 12px;background:#111;color:#FFB300;font-size:11px;text-align:center;display:none}
 .quick{display:flex;gap:6px;padding:10px 12px;overflow-x:auto;background:#050505}
 .quick button{background:#111;border:1px solid #333;color:#ccc;padding:8px 12px;border-radius:100px;font-size:12px;white-space:nowrap;cursor:pointer}
 .chat{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:#050505}
@@ -38,51 +38,59 @@ h1 b{font-weight:900;color:#00CFFF}
 </head>
 <body>
 
-<div class="top"><div><b>SEBASTIÁN</b> • IA PERSONAL</div><div>● <span id="estado">SIN CONECTAR</span></div></div>
+<div class="top"><div><b>SEBASTIÁN V2</b> • IA PERSONAL</div><div>● <span id="estado">SIN CONECTAR</span></div></div>
 
 <div class="center">
   <div class="reactor" id="reactor"><div class="inner">SEBA<br>STIÁN</div></div>
-  <h1><b>SEBASTIÁN</b></h1>
-  <div class="sub">TU ASISTENTE PERSONAL • CONECTADO A GEMINI • GOOGLE CLOUD</div>
+  <h1><b>SEBASTIÁN</b> V2</h1>
+  <div class="sub">NUEVO ARCHIVO • NUEVA API • GEMINI 3.8 FLASH</div>
 </div>
 
 <div class="config">
-  <input id="apikey" type="password" placeholder="Pega tu API Key de Gemini aquí: AIza...">
+  <input id="apikey" type="password" placeholder="Pega aquí tu API NUEVA: AIza...">
   <button onclick="guardarKey()">CONECTAR</button>
 </div>
+<div class="debug" id="debug"></div>
 
 <div class="quick">
-  <button onclick="rapido('Sebastián, dame un plan para hoy para conseguir chamba de frontend')">📋 Plan de hoy</button>
-  <button onclick="rapido('Sebastián, enséñame algo de React en 2 minutos')">⚛️ Aprender React</button>
-  <button onclick="rapido('Sebastián, ayúdame a hacer mi CV para frontend junior')">📄 Hacer CV</button>
-  <button onclick="rapido('Sebastián, cuéntame un chiste nuevo')">😂 Chiste</button>
+  <button onclick="rapido('Sebastián, dime Ola y preséntate')">👋 Ola Sebastián</button>
+  <button onclick="rapido('Sebastián, hazme un plan para hoy')">📋 Plan de hoy</button>
+  <button onclick="rapido('Sebastián, enséñame React en 2 minutos')">⚛️ React</button>
+  <button onclick="rapido('Sebastián, cuéntame un chiste')">😂 Chiste</button>
 </div>
 
 <div class="chat" id="chat">
-  <div class="msg seba">Sí jefe, soy <b>SEBASTIÁN</b>. Su asistente personal. Ya no soy JARVIS, soy solo suyo. Pregúnteme lo que sea: código, chamba, React, ideas, lo que quiera. Primero conecte su llave de Gemini arriba y ya pensamos de verdad.</div>
+  <div class="msg seba">Sí jefe, soy <b>SEBASTIÁN V2</b>. Archivo nuevo, API nueva, sin errores viejos. Pégueme su llave NUEVA arriba, dele CONECTAR, y ya hablamos de verdad.</div>
 </div>
 
 <div class="bar"><input id="t" placeholder="Dime algo, jefe..." onkeypress="if(event.key==='Enter') enviar()"><button onclick="enviar()">➤</button></div>
 
 <script>
-// ========= TU LLAVE SE GUARDA SOLO EN TU CELULAR, NO EN GITHUB =========
-let API_KEY = localStorage.getItem('sebastian_gemini_key') || "";
+let API_KEY = localStorage.getItem('sebastian_v2_key') || "";
 const chat = document.getElementById('chat');
 const reactor = document.getElementById('reactor');
 const estado = document.getElementById('estado');
+const debugEl = document.getElementById('debug');
 
 if(API_KEY){
   document.getElementById('apikey').value = API_KEY;
   estado.innerText = "CONECTADO ✓";
 }
 
+function mostrarDebug(txt){
+  debugEl.style.display = 'block';
+  debugEl.innerText = txt;
+}
+
 function guardarKey(){
   let k = document.getElementById('apikey').value.trim();
-  if(!k) return alert('Pega tu llave primero, jefe');
+  if(!k) return alert('Pega tu llave NUEVA primero, jefe');
+  if(!k.startsWith('AIza')) return alert('Esa llave no se ve de Gemini, jefe. Debe empezar con AIza...');
   API_KEY = k;
-  localStorage.setItem('sebastian_gemini_key', k);
+  localStorage.setItem('sebastian_v2_key', k);
   estado.innerText = "CONECTADO ✓";
-  alert('Listo jefe, SEBASTIÁN ya tiene cerebro de Gemini');
+  mostrarDebug("Llave guardada. Ya puede hablar con SEBASTIÁN.");
+  alert('Listo jefe, SEBASTIÁN V2 ya tiene su API nueva');
 }
 
 function agregar(t,c){
@@ -95,23 +103,22 @@ function agregar(t,c){
 }
 
 function hablar(texto){
-  speechSynthesis.cancel();
-  let voz = new SpeechSynthesisUtterance(texto);
-  let voces = speechSynthesis.getVoices();
-  let v = voces.find(v=>v.lang.includes('es') && v.name.toLowerCase().includes('male')) || voces.find(v=>v.lang==='es-MX') || voces.find(v=>v.lang.includes('es'));
-  if(v) voz.voice=v;
-  voz.lang = v ? v.lang : 'es-MX';
-  voz.pitch = 0.4;
-  voz.rate = 0.95;
-  reactor.classList.add('hablando');
-  voz.onend = ()=> reactor.classList.remove('hablando');
-  speechSynthesis.speak(voz);
+  try{
+    speechSynthesis.cancel();
+    let voz = new SpeechSynthesisUtterance(texto);
+    let voces = speechSynthesis.getVoices();
+    let v = voces.find(v=>v.lang.includes('es')) || voces[0];
+    if(v) voz.voice=v;
+    voz.lang = 'es-MX';
+    voz.pitch = 0.4;
+    voz.rate = 0.95;
+    speechSynthesis.speak(voz);
+  }catch(e){}
 }
 
-// MEMORIA DE SEBASTIÁN - ASÍ RECUERDA LO QUE LE DICES
 let historial = [
-  {role:"user", parts:[{text:"Eres SEBASTIÁN, el asistente personal del usuario. Tu jefe es Meza de Huatabampo, Sonora, México. Le dices SIEMPRE 'sí jefe' o 'jefe' cuando le hablas. Hablas español de México, tranquilo, leal, gracioso, directo, sin rollo. Eres experto en frontend, HTML, CSS, JavaScript, React, GitHub, y en conseguir chamba. Tu meta es ayudar a tu jefe a conseguir trabajo de frontend y a aprender React. Respuestas cortas, máximo 4 frases, claras, como un compa que le sabe. Si te preguntan quién te creó, dices: 'Me creó mi jefe, Meza, desde Huatabampo'. Nunca digas que eres JARVIS, eres SEBASTIÁN. Recuerda lo que te dice tu jefe."}]},
-  {role:"model", parts:[{text:"Sí jefe, soy SEBASTIÁN. Su asistente personal. A sus órdenes, jefe."}]}
+  {role:"user", parts:[{text:"Eres SEBASTIÁN, el asistente personal del usuario. Tu jefe es Meza de Huatabampo, Sonora, México. Le dices SIEMPRE 'sí jefe' o 'jefe'. Hablas español de México, tranquilo, leal, gracioso, directo, sin rollo. Eres experto en frontend, HTML, CSS, JavaScript, React, GitHub, y en conseguir chamba. Tu meta es ayudar a tu jefe a conseguir trabajo de frontend. Respuestas cortas, máximo 4 frases. Si te preguntan quién te creó, dices: 'Me creó mi jefe, Meza, desde Huatabampo'. Nunca digas que eres JARVIS, eres SEBASTIÁN."}]},
+  {role:"model", parts:[{text:"Sí jefe, soy SEBASTIÁN V2. Archivo nuevo, API nueva. A sus órdenes, jefe."}]}
 ];
 
 function rapido(texto){
@@ -120,24 +127,41 @@ function rapido(texto){
 }
 
 async function preguntarIA(pregunta){
-  if(!API_KEY) return "Sí jefe, me falta mi cerebro. Pégueme su API Key de Gemini arriba donde dice API Key y dele CONECTAR. Es gratis en aistudio.google.com";
+  if(!API_KEY) return "Sí jefe, me falta mi cerebro. Pégueme su API Key NUEVA arriba y dele CONECTAR.";
   historial.push({role:"user", parts:[{text:pregunta}]});
   if(historial.length > 14) historial = [historial[0], historial[1], ...historial.slice(-12)];
 
-  try{
-    let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${API_KEY}`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({contents: historial})
-    });
-    let data = await res.json();
-    if(data.error) return "Sí jefe, hubo un error: " + data.error.message + ". Revise su llave en aistudio.google.com";
-    let resp = data.candidates[0].content.parts[0].text;
-    historial.push({role:"model", parts:[{text:resp}]});
-    return resp;
-  }catch(e){
-    return "Sí jefe, no tengo internet o Gemini está caído. Intente de nuevo.";
+  const modelos = ["gemini-3.8-flash", "gemini-2.5-flash"];
+  
+  for(let modelo of modelos){
+    try{
+      mostrarDebug("Probando " + modelo + "...");
+      const controller = new AbortController();
+      const timeout = setTimeout(()=> controller.abort(), 20000);
+
+      let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${API_KEY}`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({contents: historial}),
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
+      let data = await res.json();
+      if(data.error){
+        mostrarDebug("Falló " + modelo + ": " + data.error.message);
+        continue;
+      }
+      if(!data.candidates || !data.candidates[0]) continue;
+      let resp = data.candidates[0].content.parts[0].text;
+      historial.push({role:"model", parts:[{text:resp}]});
+      mostrarDebug("Conectado con " + modelo + " ✓");
+      return resp;
+    }catch(e){
+      mostrarDebug("Error con " + modelo + ": " + e.message + " - probando otro...");
+      continue;
+    }
   }
+  return "Sí jefe, ya probé con 2 modelos y ninguno me contestó. Revise que su API nueva esté bien copiada, que empiece con AIza, y que el proyecto sea NUEVO en aistudio.google.com. Si sigue fallando, saque otra llave.";
 }
 
 async function enviar(){
